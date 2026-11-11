@@ -41,7 +41,7 @@ L'oral est la compétence la plus déterminante aux examens de langue, mais la m
 - **Feedback immédiat et argumenté** : corrections, reformulations, exercices ciblés.
 - **Simulations fidèles** aux épreuves officielles : préparation chronométrée, sujet tiré au sort, relances d'un examinateur virtuel, note estimée sur la grille du niveau visé.
 - **Le formateur garde la main** : il réécoute, ajuste la note automatique et commente.
--
+- 
 ### Acteurs
 
 | Acteur | Rôle |
@@ -232,3 +232,5 @@ oraltrainer-<classe>-<groupe>/
 
 
 ---
+
+
