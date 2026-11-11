@@ -1,14 +1,12 @@
 package com.oraltrainer.content.service.interfaces;
 
-import com.oraltrainer.content.dto.LessonRequestDTO;
-import com.oraltrainer.content.dto.LessonResponseDTO;
-
+import com.oraltrainer.content.entity.Lesson;
 import java.util.List;
 
 public interface ILessonService {
-    LessonResponseDTO createLesson(LessonRequestDTO requestDTO);
-    LessonResponseDTO getLessonById(Long id);
-    List<LessonResponseDTO> getLessonsByModuleId(Long moduleId);
-    LessonResponseDTO updateLesson(Long id, LessonRequestDTO requestDTO);
+    Lesson createLesson(Lesson lesson);
+    Lesson getLessonById(Long id);
+    List<Lesson> getLessonsByModuleId(Long moduleId);
+    Lesson updateLesson(Long id, Lesson lesson);
     void deleteLesson(Long id);
 }

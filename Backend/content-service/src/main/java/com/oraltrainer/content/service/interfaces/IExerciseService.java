@@ -1,15 +1,13 @@
 package com.oraltrainer.content.service.interfaces;
 
-import com.oraltrainer.content.dto.ExerciseRequestDTO;
-import com.oraltrainer.content.dto.ExerciseResponseDTO;
-
+import com.oraltrainer.content.entity.Exercise;
 import java.util.List;
 
 public interface IExerciseService {
-    ExerciseResponseDTO createExercise(ExerciseRequestDTO requestDTO);
-    ExerciseResponseDTO getExerciseById(Long id);
-    List<ExerciseResponseDTO> getExercisesByLessonId(Long lessonId);
-    List<ExerciseResponseDTO> getExercisesByErrorTagAndLevel(String errorTag, String level);
-    ExerciseResponseDTO updateExercise(Long id, ExerciseRequestDTO requestDTO);
+    Exercise createExercise(Exercise exercise);
+    Exercise getExerciseById(Long id);
+    List<Exercise> getExercisesByLessonId(Long lessonId);
+    List<Exercise> getExercisesByErrorTagAndLevel(String errorTag, String level);
+    Exercise updateExercise(Long id, Exercise exercise);
     void deleteExercise(Long id);
 }

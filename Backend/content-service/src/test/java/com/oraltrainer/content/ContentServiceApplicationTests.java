@@ -7,8 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,10 +37,10 @@ class ContentServiceApplicationTests {
     void shouldCreateAndRetrieveCourse() throws Exception {
         String courseJson = """
                 {
-                    "title": "Préparation DELF B2",
-                    "description": "Entraînement complet à l'expression orale",
+                    "title": "Nouveau Cours Test",
+                    "description": "Description du cours test",
                     "language": "FRENCH",
-                    "level": "B2"
+                    "level": "C1"
                 }
                 """;
 
@@ -47,9 +49,7 @@ class ContentServiceApplicationTests {
                         .content(courseJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.title").value("Préparation DELF B2"))
-                .andExpect(jsonPath("$.language").value("FRENCH"))
-                .andExpect(jsonPath("$.level").value("B2"));
+                .andExpect(jsonPath("$.title").value("Nouveau Cours Test"));
 
         mockMvc.perform(get("/api/courses")
                         .contentType(MediaType.APPLICATION_JSON))

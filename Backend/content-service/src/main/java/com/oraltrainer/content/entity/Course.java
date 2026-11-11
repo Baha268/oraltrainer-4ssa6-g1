@@ -1,5 +1,6 @@
 package com.oraltrainer.content.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class Course {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @JsonManagedReference(value = "course-modules")
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("orderIndex ASC")
     private List<Module> modules = new ArrayList<>();

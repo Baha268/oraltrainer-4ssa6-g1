@@ -1,5 +1,6 @@
 package com.oraltrainer.content.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -25,8 +26,9 @@ public class Exercise {
     @Column(name = "max_score")
     private Integer maxScore = 20;
 
+    @JsonBackReference(value = "lesson-exercises")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id", nullable = false)
+    @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
     public Exercise() {

@@ -1,15 +1,13 @@
 package com.oraltrainer.content.service.interfaces;
 
-import com.oraltrainer.content.dto.CourseRequestDTO;
-import com.oraltrainer.content.dto.CourseResponseDTO;
-
+import com.oraltrainer.content.entity.Course;
 import java.util.List;
 
 public interface ICourseService {
-    CourseResponseDTO createCourse(CourseRequestDTO requestDTO);
-    CourseResponseDTO getCourseById(Long id);
-    List<CourseResponseDTO> getAllCourses();
-    List<CourseResponseDTO> getCoursesByLanguageAndLevel(String language, String level);
-    CourseResponseDTO updateCourse(Long id, CourseRequestDTO requestDTO);
+    Course createCourse(Course course);
+    Course getCourseById(Long id);
+    List<Course> getAllCourses();
+    List<Course> getCoursesByLanguageAndLevel(String language, String level);
+    Course updateCourse(Long id, Course course);
     void deleteCourse(Long id);
 }

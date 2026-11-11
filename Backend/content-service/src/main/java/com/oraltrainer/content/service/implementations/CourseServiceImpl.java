@@ -1,10 +1,6 @@
 package com.oraltrainer.content.service.implementations;
 
-import com.oraltrainer.content.dto.CourseRequestDTO;
-import com.oraltrainer.content.dto.CourseResponseDTO;
 import com.oraltrainer.content.entity.Course;
-import com.oraltrainer.content.exception.ResourceNotFoundException;
-import com.oraltrainer.content.mapper.CourseMapper;
 import com.oraltrainer.content.repository.CourseRepository;
 import com.oraltrainer.content.service.interfaces.ICourseService;
 import org.springframework.stereotype.Service;
@@ -17,66 +13,54 @@ import java.util.List;
 public class CourseServiceImpl implements ICourseService {
 
     private final CourseRepository courseRepository;
-    private final CourseMapper courseMapper;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper) {
+    public CourseServiceImpl(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-        this.courseMapper = courseMapper;
     }
 
     @Override
-    public CourseResponseDTO createCourse(CourseRequestDTO requestDTO) {
-        Course course = courseMapper.toEntity(requestDTO);
-        Course savedCourse = courseRepository.save(course);
-        return courseMapper.toResponseDTO(savedCourse);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public CourseResponseDTO getCourseById(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cours non trouvé avec l'id : " + id));
-        return courseMapper.toResponseDTO(course);
+    public Course createCourse(Course course) {
+        return courseRepository.save(course);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<CourseResponseDTO> getAllCourses() {
-        return courseRepository.findAll().stream()
-                .map(courseMapper::toResponseDTO)
-                .toList();
+    public Course getCourseById(Long id) {
+        return courseRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<CourseResponseDTO> getCoursesByLanguageAndLevel(String language, String level) {
-        List<Course> courses;
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Course> getCoursesByLanguageAndLevel(String language, String level) {
         if (language != null && level != null) {
-            courses = courseRepository.findByLanguageIgnoreCaseAndLevelIgnoreCase(language, level);
+            return courseRepository.findByLanguageIgnoreCaseAndLevelIgnoreCase(language, level);
         } else if (language != null) {
-            courses = courseRepository.findByLanguageIgnoreCase(language);
-        } else {
-            courses = courseRepository.findAll();
+            return courseRepository.findByLanguageIgnoreCase(language);
         }
-        return courses.stream()
-                .map(courseMapper::toResponseDTO)
-                .toList();
+        return courseRepository.findAll();
     }
 
     @Override
-    public CourseResponseDTO updateCourse(Long id, CourseRequestDTO requestDTO) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cours non trouvé avec l'id : " + id));
-        courseMapper.updateEntityFromDto(requestDTO, course);
-        Course updatedCourse = courseRepository.save(course);
-        return courseMapper.toResponseDTO(updatedCourse);
+    public Course updateCourse(Long id, Course courseDetails) {
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course != null) {
+            course.setTitle(courseDetails.getTitle());
+            course.setDescription(courseDetails.getDescription());
+            course.setLanguage(courseDetails.getLanguage());
+            course.setLevel(courseDetails.getLevel());
+            return courseRepository.save(course);
+        }
+        return null;
     }
 
     @Override
     public void deleteCourse(Long id) {
-        if (!courseRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Cours non trouvé avec l'id : " + id);
-        }
         courseRepository.deleteById(id);
     }
 }

@@ -1,5 +1,7 @@
 package com.oraltrainer.content.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +26,12 @@ public class Lesson {
     @Column(name = "order_index")
     private Integer orderIndex = 0;
 
+    @JsonBackReference(value = "module-lessons")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "module_id", nullable = false)
+    @JoinColumn(name = "module_id")
     private Module module;
 
+    @JsonManagedReference(value = "lesson-exercises")
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Exercise> exercises = new ArrayList<>();
 

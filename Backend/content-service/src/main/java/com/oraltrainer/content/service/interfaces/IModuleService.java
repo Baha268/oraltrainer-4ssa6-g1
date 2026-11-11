@@ -1,14 +1,12 @@
 package com.oraltrainer.content.service.interfaces;
 
-import com.oraltrainer.content.dto.ModuleRequestDTO;
-import com.oraltrainer.content.dto.ModuleResponseDTO;
-
+import com.oraltrainer.content.entity.Module;
 import java.util.List;
 
 public interface IModuleService {
-    ModuleResponseDTO createModule(ModuleRequestDTO requestDTO);
-    ModuleResponseDTO getModuleById(Long id);
-    List<ModuleResponseDTO> getModulesByCourseId(Long courseId);
-    ModuleResponseDTO updateModule(Long id, ModuleRequestDTO requestDTO);
+    Module createModule(Module module);
+    Module getModuleById(Long id);
+    List<Module> getModulesByCourseId(Long courseId);
+    Module updateModule(Long id, Module module);
     void deleteModule(Long id);
 }
