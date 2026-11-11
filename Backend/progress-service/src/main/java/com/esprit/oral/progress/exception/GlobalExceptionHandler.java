@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    public static class BadRequestException extends RuntimeException {
+        public BadRequestException(String m) { super(m); }
+    }
     public static class NotFoundException extends RuntimeException {
         public NotFoundException(String m) { super(m); }
     }
@@ -17,6 +20,11 @@ public class GlobalExceptionHandler {
     }
     public static class RemoteServiceUnavailableException extends RuntimeException {
         public RemoteServiceUnavailableException(String m) { super(m); }
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ProblemDetail badRequest(BadRequestException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ExceptionHandler(NotFoundException.class)

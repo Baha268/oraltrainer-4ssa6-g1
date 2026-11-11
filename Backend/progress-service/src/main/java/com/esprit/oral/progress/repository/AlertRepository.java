@@ -10,4 +10,5 @@ public interface AlertRepository extends JpaRepository<Alert, Long> {
     Page<Alert> findByGroupId(Long groupId, Pageable pageable);
     Page<Alert> findByStatus(AlertStatus status, Pageable pageable);
     Page<Alert> findByGroupIdAndStatus(Long groupId, AlertStatus status, Pageable pageable);
+    long countByGroupIdAndStatus(Long groupId, AlertStatus status);
 }
